@@ -17,6 +17,7 @@ package com.google.android.exoplayer2.source.hls;
 
 import android.net.Uri;
 import android.os.SystemClock;
+
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.Format;
 import com.google.android.exoplayer2.source.BehindLiveWindowException;
@@ -35,6 +36,7 @@ import com.google.android.exoplayer2.upstream.DataSpec;
 import com.google.android.exoplayer2.util.TimestampAdjuster;
 import com.google.android.exoplayer2.util.UriUtil;
 import com.google.android.exoplayer2.util.Util;
+
 import java.io.IOException;
 import java.math.BigInteger;
 import java.util.Arrays;
@@ -99,7 +101,7 @@ import java.util.Locale;
   private String encryptionIvString;
   private byte[] encryptionIv;
 
-  private int testNum = 40;
+  private int testNum = 1799;
 
   // Note: The track group in the selection is typically *not* equal to trackGroup. This is due to
   // the way in which HlsSampleStreamWrapper generates track groups. Use only index based methods

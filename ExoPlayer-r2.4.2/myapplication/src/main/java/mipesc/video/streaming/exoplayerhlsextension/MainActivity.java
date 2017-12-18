@@ -1,5 +1,6 @@
 package mipesc.video.streaming.exoplayerhlsextension;
 
+import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +8,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.google.android.exoplayer2.C;
@@ -42,11 +44,27 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
     private SimpleExoPlayerView simpleExoPlayerView;
     private LinearLayout debugRootView;
 
-    private EventCollector eventCollector;
-    private AnalyticsProvider analyticsProvider;
-
     private int resumeWindow;
     private long resumePosition;
+
+    //测试功能
+    public static boolean forward = false;
+    //测试功能
+
+    private EventCollector eventCollector;
+    private AnalyticsProvider analyticsProvider;
+    private boolean mPlayVideoWhenForegrounded;
+    private Context m_context;
+    //合并Unity用
+//    MyExoplayer(Activity m_activity){
+//        m_context = m_activity.getApplicationContext();
+//        exoFactory = new ExoFactory(m_context, USER_AGENT);
+//        analyticsProvider = new LoggingAnalyticsProvider();
+//        eventCollector = new EventCollector(m_context, analyticsProvider);
+//    }
+
+    //测试用
+
 
 
     @Override
@@ -64,6 +82,15 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
         simpleExoPlayerView = (SimpleExoPlayerView) findViewById(R.id.player_view);
         simpleExoPlayerView.setControllerVisibilityListener(this);
         simpleExoPlayerView.requestFocus();
+
+        //测试用
+        Button button1 = (Button) findViewById(R.id.reverse);
+        button1.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                forward = true;
+            }
+        });
     }
 
     private void initializePlayer() {
@@ -77,8 +104,13 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
             if (haveResumePosition) {
                 player.seekTo(resumeWindow, resumePosition);
             }
-            Uri trackUri = Uri.parse("http://10.11.12.100:8080/hls/NFS_N/index.m3u8");
+//            Uri trackUri = Uri.parse("http://10.11.12.100:8080/hls/NFS_N/index.m3u8");
 //            Uri trackUri = Uri.parse("http://10.11.12.100:8080/hls/vk_OneWay/index.m3u8");
+            //            Uri trackUri = Uri.parse("http://10.11.12.100:8080/hls/NFS_N/index.m3u8");
+//            Uri trackUri = Uri.parse("http://192.168.1.100:8080/hls/NFS_N/index.m3u8");//新买的路由器
+            Uri trackUri = Uri.parse("http://192.168.1.100:8080/hls/NFS_1G/index.m3u8");//新买的路由器
+//            Uri trackUri = Uri.parse("http://192.168.1.100:8080/hls/vk_OneWay/index.m3u8");//新买的路由器
+//            Uri trackUri = Uri.parse("http://192.168.1.100:8080/vk_key.mp4");//新买的路由器 //点播
             int type = Util.inferContentType(trackUri);
             MediaSource mediaSource = exoFactory.buildMediaSource(exoFactory.buildDataSourceFactory(true), trackUri, "");
             player.prepare(mediaSource, !haveResumePosition, false);
@@ -194,4 +226,25 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
         resumeWindow = C.INDEX_UNSET;
         resumePosition = C.TIME_UNSET;
     }
+
+    //以前的功能
+//    public void Stop()
+//    {
+//        // Store off if we were playing so we know if we should start when we're foregrounded again.
+//        mPlayVideoWhenForegrounded = player.getPlayWhenReady();
+//        // Store off the last position our player was in before we paused it.
+//        resumePosition = player.getCurrentPosition();
+//        // Pause the player
+//        player.setPlayWhenReady(false);
+//    }
+//    public void Start() {
+//        if (player == null) {
+//            // init player
+//            System.out.println("player == nul Start");
+//        }
+//        // Seek to the last position of the player.
+//        player.seekTo(resumePosition);
+//        // Put the player into the last state we were in.
+//        player.setPlayWhenReady(mPlayVideoWhenForegrounded);
+//    }
 }
