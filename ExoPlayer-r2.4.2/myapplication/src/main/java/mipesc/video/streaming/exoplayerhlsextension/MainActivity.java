@@ -11,6 +11,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
+import com.google.android.exoplayer2.AL.ALCmd;
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.ExoPlaybackException;
 import com.google.android.exoplayer2.ExoPlayer;
@@ -69,6 +70,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        ALCmd.CURRENT_MOVE_STATE = ALCmd.MOVE_STATE_FORWARD;
         Log.d("MainActivity", "Creating main activity");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -83,12 +85,27 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
         simpleExoPlayerView.setControllerVisibilityListener(this);
         simpleExoPlayerView.requestFocus();
 
-        //测试用
+        //测试用获取
         Button button1 = (Button) findViewById(R.id.reverse);
         button1.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                forward = true;
+                ALCmd.CURRENT_MOVE_STATE = ALCmd.MOVE_STATE_BACK;
+//                mipesc.video.streaming.exoplayerhlsextension.ALCmd.CURRENT_MOVE_STATE = mipesc.video.streaming.exoplayerhlsextension.ALCmd.MOVE_STATE_BACK;
+//                sendEmptyMessage(MSG_END_OF_SOURCE);
+//                handler.sendEmptyMessage(MOVE_STATE_BACK);
+            }
+        });
+
+        //测试用获取
+        Button button2 = (Button) findViewById(R.id.forward);
+        button2.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ALCmd.CURRENT_MOVE_STATE = ALCmd.MOVE_STATE_FORWARD;
+//                mipesc.video.streaming.exoplayerhlsextension.ALCmd.CURRENT_MOVE_STATE = mipesc.video.streaming.exoplayerhlsextension.ALCmd.MOVE_STATE_BACK;
+//                sendEmptyMessage(MSG_END_OF_SOURCE);
+//                handler.sendEmptyMessage(MOVE_STATE_BACK);
             }
         });
     }
@@ -106,11 +123,11 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
             }
 //            Uri trackUri = Uri.parse("http://10.11.12.100:8080/hls/NFS_N/index.m3u8");
 //            Uri trackUri = Uri.parse("http://10.11.12.100:8080/hls/vk_OneWay/index.m3u8");
-            //            Uri trackUri = Uri.parse("http://10.11.12.100:8080/hls/NFS_N/index.m3u8");
-//            Uri trackUri = Uri.parse("http://192.168.1.100:8080/hls/NFS_N/index.m3u8");//新买的路由器
-            Uri trackUri = Uri.parse("http://192.168.1.100:8080/hls/NFS_1G/index.m3u8");//新买的路由器
-//            Uri trackUri = Uri.parse("http://192.168.1.100:8080/hls/vk_OneWay/index.m3u8");//新买的路由器
-//            Uri trackUri = Uri.parse("http://192.168.1.100:8080/vk_key.mp4");//新买的路由器 //点播
+//              Uri trackUri = Uri.parse("http://10.11.12.100:8080/hls/NFS_N/index.m3u8");
+//            Uri trackUri = Uri.parse("http://10.213.122.118:8080/hls/NFS_N/index.m3u8");//新买的路由器
+            Uri trackUri = Uri.parse("http://10.213.122.118:8080/hls/NFS_1G/index.m3u8");//新买的路由器
+//            Uri trackUri = Uri.parse("http://10.213.122.118:8080/hls/vk_OneWay/index.m3u8");//新买的路由器
+//            Uri trackUri = Uri.parse("http://10.213.122.118:8080/vk_key.mp4");//新买的路由器 //点播
             int type = Util.inferContentType(trackUri);
             MediaSource mediaSource = exoFactory.buildMediaSource(exoFactory.buildDataSourceFactory(true), trackUri, "");
             player.prepare(mediaSource, !haveResumePosition, false);
@@ -226,6 +243,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
         resumeWindow = C.INDEX_UNSET;
         resumePosition = C.TIME_UNSET;
     }
+
 
     //以前的功能
 //    public void Stop()

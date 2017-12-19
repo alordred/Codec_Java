@@ -21,5 +21,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="reverse" />
+
+        <Button
+            android:id="@+id/forward"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="forward" />
     </LinearLayout>
 </FrameLayout>

@@ -18,6 +18,7 @@ package com.google.android.exoplayer2.source.hls;
 import android.net.Uri;
 import android.os.SystemClock;
 
+import com.google.android.exoplayer2.AL.ALCmd;
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.Format;
 import com.google.android.exoplayer2.source.BehindLiveWindowException;
@@ -46,7 +47,7 @@ import java.util.Locale;
 /**
  * Source of Hls (possibly adaptive) chunks.
  */
-/* package */ class HlsChunkSource {
+/* package */ class HlsChunkSource{
 
   /**
    * Chunk holder that allows the scheduling of retries.
@@ -100,6 +101,12 @@ import java.util.Locale;
   private byte[] encryptionKey;
   private String encryptionIvString;
   private byte[] encryptionIv;
+
+  //AL
+  private static final int MOVE_STATE_FORWARD = 101;//前进
+  private static final int MOVE_STATE_BACK = 102;//后退
+
+  public static boolean isForward = true;
 
   private int testNum = 1799;
 
@@ -296,13 +303,37 @@ import java.util.Locale;
     TimestampAdjuster timestampAdjuster = timestampAdjusterProvider.getAdjuster(
         discontinuitySequence);
 
-    String changeStr = "index" + String.valueOf(testNum) + ".ts";
-    testNum = testNum-1;
-    if(testNum == -1)
+//    String str = segment.url.split("\\.")[0];
+//    str = str.replace("index","");
+//    ALCmd.CURRENT_CHUNK = Integer.parseInt(str);
+    Uri chunkUri = null;
+    if (ALCmd.CURRENT_MOVE_STATE == ALCmd.MOVE_STATE_FORWARD)
     {
-      testNum = 0;
+      //暂时注释
+//      String str = segment.url.split("\\.")[0];
+//      str = str.replace("index","");
+//      ALCmd.CURRENT_CHUNK = Integer.parseInt(str);
+      //暂时注释
+      ALCmd.CURRENT_CHUNK++;
+//      chunkUri = UriUtil.resolveToUri(mediaPlaylist.baseUri, segment.url);
     }
-    Uri chunkUri = UriUtil.resolveToUri(mediaPlaylist.baseUri, changeStr);
+    if (ALCmd.CURRENT_MOVE_STATE == ALCmd.MOVE_STATE_BACK){
+
+      ALCmd.CURRENT_CHUNK = ALCmd.CURRENT_CHUNK-1;
+      if(ALCmd.CURRENT_CHUNK == -1)
+      {
+        ALCmd.CURRENT_CHUNK = 0;
+      }
+    }
+    String changeStr = "index" + ALCmd.CURRENT_CHUNK + ".ts";
+    chunkUri = UriUtil.resolveToUri(mediaPlaylist.baseUri, changeStr);
+
+    if (chunkUri == null)
+    {
+      return;
+    }
+
+//    Thread.dumpStack(); //测试用
 
 //    Uri chunkUri = UriUtil.resolveToUri(mediaPlaylist.baseUri, segment.url);
     // Configure the data source and spec for the chunk.
