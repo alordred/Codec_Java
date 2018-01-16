@@ -10,4 +10,20 @@ public class ALCmd {
     public static final int MOVE_STATE_STOP = 0;//前进
     public static final int MOVE_STATE_FORWARD = 1;//前进
     public static final int MOVE_STATE_BACK = 2;//后退
+    public static long RTTtime = 0;
+    public static int currentMs = 10000;
+    public static long decodeTime = 0;
+    public static int currentDecodeMs = 10000;
+
+//    long nanoTime = System.nanoTime() - ALCmd.RTTtime;
+//    //      long tempMs = 0.000001;
+//    long MsTime = nanoTime/1000000;
+//    //0.000 001
+//    String RTTstr1 = String.valueOf(nanoTime);
+//    String RTTstr2 = String.valueOf(MsTime);
+//      Log.d("===== RTTstr nanoTime:",RTTstr1);
+//      Log.d("===== RTTstr MsTime:",RTTstr2);
+//      Log.d("ALCmd.RTTtime: ",String.valueOf(ALCmd.RTTtime));
+////      Log.d("presentationTimeUs: ",String.valueOf(outputBufferInfo.presentationTimeUs));
+    //testNumPre
 }

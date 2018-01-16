@@ -24,6 +24,8 @@ import android.media.MediaFormat;
 import android.os.Looper;
 import android.os.SystemClock;
 import android.util.Log;
+
+import com.google.android.exoplayer2.AL.ALCmd;
 import com.google.android.exoplayer2.BaseRenderer;
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.ExoPlaybackException;
@@ -40,6 +42,7 @@ import com.google.android.exoplayer2.util.Assertions;
 import com.google.android.exoplayer2.util.NalUnitUtil;
 import com.google.android.exoplayer2.util.TraceUtil;
 import com.google.android.exoplayer2.util.Util;
+
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
@@ -708,7 +711,9 @@ public abstract class MediaCodecRenderer extends BaseRenderer {
       } else {
 //        Log.d("inputIndex:",String.valueOf(inputIndex));
 //        Log.d("buffer.data.limit():",String.valueOf(buffer.data.limit()));
-        Log.d("presentationTimeUs:",String.valueOf(presentationTimeUs));
+//        Log.d("ALpresentationTimeUs:",String.valueOf(presentationTimeUs));
+//        Log.d("queueInputBuffer:","queueInputBuffer");
+        ALCmd.decodeTime = System.nanoTime();
         codec.queueInputBuffer(inputIndex, 0, buffer.data.limit(), testNumPre, 0);
         testNumPre += 23219;
       }
@@ -909,6 +914,32 @@ public abstract class MediaCodecRenderer extends BaseRenderer {
           return false;
         }
       } else {
+        long nanoTime = System.nanoTime() - ALCmd.RTTtime;
+    //      long tempMs = 0.000001;
+        long MsTime = nanoTime/1000000;
+    //0.000 001
+        String RTTstr1 = String.valueOf(nanoTime);
+        String RTTstr2 = String.valueOf(MsTime);
+
+//        Log.d("===== RTTstr nanoTime:",RTTstr1);
+//        if(MsTime < ALCmd.currentMs)
+//        {
+//          Log.d("===== RTTstr MsTime:",String.valueOf(ALCmd.currentMs));
+//        }
+//        ALCmd.currentMs = (int)MsTime;
+//        Log.d("getDequeueOutputBuT: ",String.valueOf(getDequeueOutputBufferTimeoutUs()));
+//        Log.d("ALCmd.RTTtime: ",String.valueOf(ALCmd.RTTtime));
+//      Log.d("presentationTimeUs: ",String.valueOf(outputBufferInfo.presentationTimeUs));
+//        Log.d("dequeueOutputBuffer","dequeueOutputBuffer");
+        long nanoTime2 = System.nanoTime()  - ALCmd.decodeTime;
+        long MsTime2 = nanoTime2/1000000;
+        if(MsTime > MsTime2 && MsTime<500)
+        {
+          Log.d("===================","===================================");
+          Log.d("===== RTTstr MsTime:",String.valueOf(MsTime));
+          Log.d("xxxxx Decode MsTime:",String.valueOf(MsTime2));
+          Log.d("===================","===================================");
+        }
         outputIndex = codec.dequeueOutputBuffer(outputBufferInfo,
             getDequeueOutputBufferTimeoutUs());
       }
@@ -965,6 +996,7 @@ public abstract class MediaCodecRenderer extends BaseRenderer {
         return false;
       }
     } else {
+
       processedOutputBuffer = processOutputBuffer(positionUs, elapsedRealtimeUs, codec,
           outputBuffers[outputIndex], outputIndex, outputBufferInfo.flags,
           outputBufferInfo.presentationTimeUs, shouldSkipOutputBuffer);

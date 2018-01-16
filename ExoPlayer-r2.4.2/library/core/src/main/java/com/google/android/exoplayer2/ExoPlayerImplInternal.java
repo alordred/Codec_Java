@@ -422,7 +422,8 @@ import java.io.IOException;
   }
 
   private void stopRenderers() throws ExoPlaybackException {
-    Thread.dumpStack();
+    Log.d("stopRenderers","stopRenderers");
+//    Thread.dumpStack();
     standaloneMediaClock.stop();
     for (Renderer renderer : enabledRenderers) {
       ensureStopped(renderer);

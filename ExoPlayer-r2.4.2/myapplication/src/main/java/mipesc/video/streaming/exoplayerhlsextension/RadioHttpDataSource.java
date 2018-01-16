@@ -1,9 +1,6 @@
 package mipesc.video.streaming.exoplayerhlsextension;
 
-import android.net.Uri;
-import android.provider.Settings;
-import android.util.Log;
-
+import com.google.android.exoplayer2.AL.ALCmd;
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.upstream.DataSpec;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSource;
@@ -55,7 +52,8 @@ public class RadioHttpDataSource extends DefaultHttpDataSource {
      */
     @Override
     public long open(DataSpec dataSpec) throws HttpDataSourceException {
-        Log.d(TAG, dataSpec.uri.toString());
+//        Log.d(TAG, dataSpec.uri.toString());
+        ALCmd.RTTtime = System.nanoTime();
         this.dataSpec = dataSpec;
         if (listener != null) {
             listener.onHttpTransferStart(dataSpec);

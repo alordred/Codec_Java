@@ -295,14 +295,12 @@ import java.util.Locale;
       initDataSpec = new DataSpec(initSegmentUri, initSegment.byterangeOffset,
           initSegment.byterangeLength, null);
     }
-
     // Compute start time of the next chunk.
     long startTimeUs = mediaPlaylist.startTimeUs + segment.relativeStartTimeUs;
     int discontinuitySequence = mediaPlaylist.discontinuitySequence
         + segment.relativeDiscontinuitySequence;
     TimestampAdjuster timestampAdjuster = timestampAdjusterProvider.getAdjuster(
         discontinuitySequence);
-
 //    String str = segment.url.split("\\.")[0];
 //    str = str.replace("index","");
 //    ALCmd.CURRENT_CHUNK = Integer.parseInt(str);
@@ -318,7 +316,6 @@ import java.util.Locale;
 //      chunkUri = UriUtil.resolveToUri(mediaPlaylist.baseUri, segment.url);
     }
     if (ALCmd.CURRENT_MOVE_STATE == ALCmd.MOVE_STATE_BACK){
-
       ALCmd.CURRENT_CHUNK = ALCmd.CURRENT_CHUNK-1;
       if(ALCmd.CURRENT_CHUNK == -1)
       {
@@ -327,7 +324,6 @@ import java.util.Locale;
     }
     String changeStr = "index" + ALCmd.CURRENT_CHUNK + ".ts";
     chunkUri = UriUtil.resolveToUri(mediaPlaylist.baseUri, changeStr);
-
     if (chunkUri == null)
     {
       return;

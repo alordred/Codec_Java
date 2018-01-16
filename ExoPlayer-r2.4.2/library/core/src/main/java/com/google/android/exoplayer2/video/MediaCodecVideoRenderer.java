@@ -28,6 +28,7 @@ import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.Surface;
+
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.ExoPlaybackException;
 import com.google.android.exoplayer2.Format;
@@ -44,6 +45,7 @@ import com.google.android.exoplayer2.util.MimeTypes;
 import com.google.android.exoplayer2.util.TraceUtil;
 import com.google.android.exoplayer2.util.Util;
 import com.google.android.exoplayer2.video.VideoRendererEventListener.EventDispatcher;
+
 import java.nio.ByteBuffer;
 
 /**
@@ -536,7 +538,7 @@ public class MediaCodecVideoRenderer extends MediaCodecRenderer {
 
   @TargetApi(21)
   private void renderOutputBufferV21(MediaCodec codec, int bufferIndex, long releaseTimeNs) {
-    Log.d("renderOutputBufferV21","renderOutputBufferV21");
+//    Log.d("renderOutputBufferV21","renderOutputBufferV21");
 //    Log.d("bufferIndex",String.valueOf(bufferIndex));
 //    Log.d("releaseTimeNs",String.valueOf(releaseTimeNs));
     maybeNotifyVideoSizeChanged();
