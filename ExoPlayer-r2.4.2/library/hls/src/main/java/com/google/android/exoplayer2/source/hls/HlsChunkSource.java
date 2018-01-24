@@ -324,10 +324,20 @@ import java.util.Locale;
     }
     String changeStr = "index" + ALCmd.CURRENT_CHUNK + ".ts";
     chunkUri = UriUtil.resolveToUri(mediaPlaylist.baseUri, changeStr);
+    //下面这些可能有问题
+    if(ALCmd.CURRENT_MOVE_STATE == ALCmd.MOVE_STATE_LOOK_DOWN)
+    {
+      ALCmd.CURRENT_CHUNK++;
+//      String strBase = "http://10.213.122.139:8080/hls/NFS_1G_LOW/";
+      mediaPlaylist.baseUri = "http://10.213.122.139:8080/hls/NFS_1G_LOW/index.m3u8";
+      chunkUri = UriUtil.resolveToUri(mediaPlaylist.baseUri , changeStr);
+//      chunkUri = Uri.parse(strBase+changeStr);
+    }
     if (chunkUri == null)
     {
       return;
     }
+//    Log.d("mbaseUri:",mediaPlaylist.baseUri);
 
 //    Thread.dumpStack(); //测试用
 

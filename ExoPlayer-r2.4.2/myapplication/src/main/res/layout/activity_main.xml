@@ -19,13 +19,26 @@
         <Button
             android:id="@+id/reverse"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="36dp"
             android:text="reverse" />
 
         <Button
             android:id="@+id/forward"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="37dp"
             android:text="forward" />
+
+        <Button
+            android:id="@+id/LOOK_UP"
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:text="LOOK_UP" />
+
+        <Button
+            android:id="@+id/LOOK_DOWN"
+            android:layout_width="match_parent"
+            android:layout_height="37dp"
+            android:text="LOOK_DOWN" />
+
     </LinearLayout>
 </FrameLayout>

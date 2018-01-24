@@ -937,7 +937,7 @@ public abstract class MediaCodecRenderer extends BaseRenderer {
         {
           Log.d("===================","===================================");
           Log.d("===== RTTstr MsTime:",String.valueOf(MsTime));
-          Log.d("xxxxx Decode MsTime:",String.valueOf(MsTime2));
+//          Log.d("xxxxx Decode MsTime:",String.valueOf(MsTime2));
           Log.d("===================","===================================");
         }
         outputIndex = codec.dequeueOutputBuffer(outputBufferInfo,

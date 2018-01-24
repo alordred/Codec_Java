@@ -108,6 +108,30 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 //                handler.sendEmptyMessage(MOVE_STATE_BACK);
             }
         });
+
+        //测试用获取
+        Button button3 = (Button) findViewById(R.id.LOOK_UP);
+        button3.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ALCmd.CURRENT_MOVE_STATE = ALCmd.MOVE_STATE_LOOK_UP;
+//                mipesc.video.streaming.exoplayerhlsextension.ALCmd.CURRENT_MOVE_STATE = mipesc.video.streaming.exoplayerhlsextension.ALCmd.MOVE_STATE_BACK;
+//                sendEmptyMessage(MSG_END_OF_SOURCE);
+//                handler.sendEmptyMessage(MOVE_STATE_BACK);
+            }
+        });
+
+        //测试用获取
+        Button button4 = (Button) findViewById(R.id.LOOK_DOWN);
+        button4.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ALCmd.CURRENT_MOVE_STATE = ALCmd.MOVE_STATE_LOOK_DOWN;
+//                mipesc.video.streaming.exoplayerhlsextension.ALCmd.CURRENT_MOVE_STATE = mipesc.video.streaming.exoplayerhlsextension.ALCmd.MOVE_STATE_BACK;
+//                sendEmptyMessage(MSG_END_OF_SOURCE);
+//                handler.sendEmptyMessage(MOVE_STATE_BACK);
+            }
+        });
     }
 
     private void initializePlayer() {
@@ -124,7 +148,11 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 //            Uri trackUri = Uri.parse("http://10.213.122.118:8080/hls/NFS_N/index.m3u8");//新买的路由器
 //            Uri trackUri = Uri.parse("http://10.213.122.139:8080/hls/NFS_1G/index.m3u8");//新买的路由器
 //            Uri trackUri = Uri.parse("http://10.213.122.102:8080/hls/furion/index.m3u8");//ubantu
-            Uri trackUri = Uri.parse("http://203.91.121.132:8080/hls/vr63_6/index.m3u8");//清华校内ip
+//            Uri trackUri = Uri.parse("http://203.91.121.132:8080/hls/vr60H/index.m3u8");//清华校内ip
+//            Uri trackUri = Uri.parse("http://203.91.121.132:8080/hls/vr40UD/index.m3u8");//清华校内ip
+            Uri trackUri = Uri.parse("http://203.91.121.132:8080/hls/vr30m/index.m3u8");//清华校内ip
+//            Uri trackUri = Uri.parse("http://203.91.121.132:8080/hls/vr40DU/index.m3u8");//清华校内ip
+//            Uri trackUri = Uri.parse("http://10.213.122.139:8080/hls/NFS.m3u8");//mac
 //            Uri trackUri = Uri.parse("http://192.168.199.218:8080/hls/furion/index.m3u8");//ubantu
 //            Uri trackUri = Uri.parse("http://10.213.122.102:8080/hls/NFS_1G/index.m3u8");//ubantu
             int type = Util.inferContentType(trackUri);
