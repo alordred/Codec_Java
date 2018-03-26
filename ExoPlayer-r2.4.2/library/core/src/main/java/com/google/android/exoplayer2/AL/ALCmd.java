@@ -5,6 +5,7 @@ package com.google.android.exoplayer2.AL;
  */
 
 public class ALCmd {
+    //为了做实验用的公共变量
     public static int CURRENT_CHUNK = 0;
     public static int CURRENT_MOVE_STATE = -1;//前进
     public static final int MOVE_STATE_STOP = 0;//前进

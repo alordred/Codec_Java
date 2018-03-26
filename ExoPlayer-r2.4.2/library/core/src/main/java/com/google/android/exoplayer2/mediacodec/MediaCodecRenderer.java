@@ -709,6 +709,7 @@ public abstract class MediaCodecRenderer extends BaseRenderer {
             adaptiveReconfigurationBytes);
         codec.queueSecureInputBuffer(inputIndex, 0, cryptoInfo, presentationTimeUs, 0);
       } else {
+        //这里是抹去时间戳关键点,testNumPre可以调整播放速度，设置不同值效果不一样
 //        Log.d("inputIndex:",String.valueOf(inputIndex));
 //        Log.d("buffer.data.limit():",String.valueOf(buffer.data.limit()));
 //        Log.d("ALpresentationTimeUs:",String.valueOf(presentationTimeUs));
@@ -914,7 +915,7 @@ public abstract class MediaCodecRenderer extends BaseRenderer {
           return false;
         }
       } else {
-        long nanoTime = System.nanoTime() - ALCmd.RTTtime;
+        long nanoTime = System.nanoTime() - ALCmd.RTTtime;//nanoTime2为//on-Demand
     //      long tempMs = 0.000001;
         long MsTime = nanoTime/1000000;
     //0.000 001
@@ -931,13 +932,14 @@ public abstract class MediaCodecRenderer extends BaseRenderer {
 //        Log.d("ALCmd.RTTtime: ",String.valueOf(ALCmd.RTTtime));
 //      Log.d("presentationTimeUs: ",String.valueOf(outputBufferInfo.presentationTimeUs));
 //        Log.d("dequeueOutputBuffer","dequeueOutputBuffer");
-        long nanoTime2 = System.nanoTime()  - ALCmd.decodeTime;
+        long nanoTime2 = System.nanoTime()  - ALCmd.decodeTime;//nanoTime2为积进下载策略
         long MsTime2 = nanoTime2/1000000;
         if(MsTime > MsTime2 && MsTime<500)
         {
+          //这里是实验用来计算时间系统
           Log.d("===================","===================================");
-          Log.d("===== RTTstr MsTime:",String.valueOf(MsTime));
-//          Log.d("xxxxx Decode MsTime:",String.valueOf(MsTime2));
+          Log.d("On-Demand RTTstrMsTime:",String.valueOf(MsTime));
+          Log.d("Prefetch Decode MsTime:",String.valueOf(MsTime2));
           Log.d("===================","===================================");
         }
         outputIndex = codec.dequeueOutputBuffer(outputBufferInfo,

@@ -22,30 +22,31 @@ import com.google.android.exoplayer2.upstream.DefaultAllocator;
 import com.google.android.exoplayer2.util.PriorityTaskManager;
 import com.google.android.exoplayer2.util.Util;
 
-/**
+/**15
  * The default {@link LoadControl} implementation.
  */
 public final class DefaultLoadControl implements LoadControl {
 
+  //这里写带宽控制，Exoplayer的bandwidth和buffer策略
   /**
    * The default minimum duration of media that the player will attempt to ensure is buffered at all
    * times, in milliseconds.
    */
   //15000
-  public static final int DEFAULT_MIN_BUFFER_MS = 50000;
+  public static final int DEFAULT_MIN_BUFFER_MS = 2000;
 
   /**
    * The default maximum duration of media that the player will attempt to buffer, in milliseconds.
    */
   //30000
-  public static final int DEFAULT_MAX_BUFFER_MS = 500000;
+  public static final int DEFAULT_MAX_BUFFER_MS = 2000;
 
   /**
    * The default duration of media that must be buffered for playback to start or resume following a
    * user action such as a seek, in milliseconds.
    */
   //2500
-  public static final int DEFAULT_BUFFER_FOR_PLAYBACK_MS = 5000;
+  public static final int DEFAULT_BUFFER_FOR_PLAYBACK_MS = 2000;
 
   /**
    * The default duration of media that must be buffered for playback to resume after a rebuffer,
@@ -53,7 +54,7 @@ public final class DefaultLoadControl implements LoadControl {
    * action.
    */
   //5000
-  public static final int DEFAULT_BUFFER_FOR_PLAYBACK_AFTER_REBUFFER_MS  = 50000;
+  public static final int DEFAULT_BUFFER_FOR_PLAYBACK_AFTER_REBUFFER_MS  = 2000;
 
   private static final int ABOVE_HIGH_WATERMARK = 0;
   private static final int BETWEEN_WATERMARKS = 1;

@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
         simpleExoPlayerView.setControllerVisibilityListener(this);
         simpleExoPlayerView.requestFocus();
 
-        //测试用获取
+        //测试用获取按钮ALCmd.MOVE_STATE_BACK;
         Button button1 = (Button) findViewById(R.id.reverse);
         button1.setOnClickListener(new OnClickListener() {
             @Override
@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
             }
         });
 
-        //测试用获取
+        //测试用获取按钮ALCmd.MOVE_STATE_FORWARD;
         Button button2 = (Button) findViewById(R.id.forward);
         button2.setOnClickListener(new OnClickListener() {
             @Override
@@ -109,7 +109,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
             }
         });
 
-        //测试用获取
+        //测试用获取按钮ALCmd.MOVE_STATE_LOOK_UP;
         Button button3 = (Button) findViewById(R.id.LOOK_UP);
         button3.setOnClickListener(new OnClickListener() {
             @Override
@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
             }
         });
 
-        //测试用获取
+        //测试用获取按钮ALCmd.MOVE_STATE_LOOK_DOWN;
         Button button4 = (Button) findViewById(R.id.LOOK_DOWN);
         button4.setOnClickListener(new OnClickListener() {
             @Override
@@ -134,8 +134,10 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
         });
     }
 
+    //初始化函数
     private void initializePlayer() {
         if (player == null) {
+            //做一些必要的操作Exoplayer
             eventCollector.signal(new Event(Event.EventType.PLAYBACK_INIT));
             player = exoFactory.buildExoPlayer();
             player.addListener(this);
@@ -145,16 +147,38 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
             if (haveResumePosition) {
                 player.seekTo(resumeWindow, resumePosition);
             }
+
+            //这里写m3u8文件对应的地址，这个地址能直接对应到
 //            Uri trackUri = Uri.parse("http://10.213.122.118:8080/hls/NFS_N/index.m3u8");//新买的路由器
 //            Uri trackUri = Uri.parse("http://10.213.122.139:8080/hls/NFS_1G/index.m3u8");//新买的路由器
 //            Uri trackUri = Uri.parse("http://10.213.122.102:8080/hls/furion/index.m3u8");//ubantu
 //            Uri trackUri = Uri.parse("http://203.91.121.132:8080/hls/vr60H/index.m3u8");//清华校内ip
 //            Uri trackUri = Uri.parse("http://203.91.121.132:8080/hls/vr40UD/index.m3u8");//清华校内ip
-            Uri trackUri = Uri.parse("http://203.91.121.132:8080/hls/vr30m/index.m3u8");//清华校内ip
+//            Uri trackUri = Uri.parse("http://10.213.122.102:8080/hls/vr1m/index.m3u8");//清华校内ip
+//            Uri trackUri = Uri.parse("http://10.213.122.102:8080/hls/vr5m/index.m3u8");//清华校内ip
+//            Uri trackUri = Uri.parse("http://10.213.122.102:8080/hls/vr_20DU/index.m3u8");//清华校内ip60000k
+            Uri trackUri = Uri.parse("http://10.213.122.102:8080/hls/NFS_1G/index.m3u8");
+//            Uri trackUri = Uri.parse("http://10.213.122.102:8080/hls/vr60H/index.m3u8");//清华校内ip60000k
+//            Uri trackUri = Uri.parse("http://10.213.122.102:8080/hls/60BigChunk/index.m3u8");//清华校内ip60000k
+//            Uri trackUri = Uri.parse("http://10.213.122.102:8080/hls/vr20L/index.m3u8");//清华校内ip
+//            Uri trackUri = Uri.parse("http://203.91.121.132:8080/hls/vrPre40M/index.m3u8");//A-全高清，有Prefetch
+//            Uri trackUri = Uri.parse("http://203.91.121.132:8080/hls/Prefetch.m3u8");//B-动态自适应码率，有Prefetch
+//            Uri trackUri = Uri.parse("http://203.91.121.132:8080/hls/NoPrefetch.m3u8");//C-动态自适应码率，没有Prefetch
+//            Uri trackUri = Uri.parse("http://203.91.121.132:8080/hls/vr40M/index.m3u8");//D-全高清，没有Prefetch
+
+//            Uri trackUri = Uri.parse("http://203.91.121.132:8080/hls/B40M/index.m3u8");//A-全高清，有Prefetch
+//            Uri trackUri = Uri.parse("http://203.91.121.132:8080/hls/B_Prefetch.m3u8");//B-动态自适应码率，有Prefetch
+//            Uri trackUri = Uri.parse("http://203.91.121.132:8080/hls/N_Prefetch.m3u8");//C-动态自适应码率，没有Prefetch
+//            Uri trackUri = Uri.parse("http://203.91.121.132:8080/hls/N40M/index.m3u8");//D-全高清，没有Prefetch
+
+//            Uri trackUri = Uri.parse("http://192.168.31.218:8080/hls/Prefetch.m3u8");//Home
+//            Uri trackUri = Uri.parse("http://10.213.122.102:8080/hls/vr5m/index.m3u8");//清华校内ip
+//            Uri trackUri = Uri.parse("http://203.91.121.132:8080/hls/vr30m/index.m3u8");//清华校内ipssssssssss
 //            Uri trackUri = Uri.parse("http://203.91.121.132:8080/hls/vr40DU/index.m3u8");//清华校内ip
 //            Uri trackUri = Uri.parse("http://10.213.122.139:8080/hls/NFS.m3u8");//mac
 //            Uri trackUri = Uri.parse("http://192.168.199.218:8080/hls/furion/index.m3u8");//ubantu
 //            Uri trackUri = Uri.parse("http://10.213.122.102:8080/hls/NFS_1G/index.m3u8");//ubantu
+
             int type = Util.inferContentType(trackUri);
             MediaSource mediaSource = exoFactory.buildMediaSource(exoFactory.buildDataSourceFactory(true), trackUri, "");
             player.prepare(mediaSource, !haveResumePosition, false);

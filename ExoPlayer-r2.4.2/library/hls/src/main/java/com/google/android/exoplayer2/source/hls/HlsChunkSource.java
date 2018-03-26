@@ -17,6 +17,7 @@ package com.google.android.exoplayer2.source.hls;
 
 import android.net.Uri;
 import android.os.SystemClock;
+import android.util.Log;
 
 import com.google.android.exoplayer2.AL.ALCmd;
 import com.google.android.exoplayer2.C;
@@ -102,12 +103,10 @@ import java.util.Locale;
   private String encryptionIvString;
   private byte[] encryptionIv;
 
-  //AL
+  //这里是实验用临时参数
   private static final int MOVE_STATE_FORWARD = 101;//前进
   private static final int MOVE_STATE_BACK = 102;//后退
-
   public static boolean isForward = true;
-
   private int testNum = 1799;
 
   // Note: The track group in the selection is typically *not* equal to trackGroup. This is due to
@@ -304,6 +303,7 @@ import java.util.Locale;
 //    String str = segment.url.split("\\.")[0];
 //    str = str.replace("index","");
 //    ALCmd.CURRENT_CHUNK = Integer.parseInt(str);
+    //自适应FOV系统修改读取的chunk递增
     Uri chunkUri = null;
     if (ALCmd.CURRENT_MOVE_STATE == ALCmd.MOVE_STATE_FORWARD)
     {
@@ -312,9 +312,12 @@ import java.util.Locale;
 //      str = str.replace("index","");
 //      ALCmd.CURRENT_CHUNK = Integer.parseInt(str);
       //暂时注释
+
+      //增加下一个块的递增
       ALCmd.CURRENT_CHUNK++;
 //      chunkUri = UriUtil.resolveToUri(mediaPlaylist.baseUri, segment.url);
     }
+    //往回走的控制
     if (ALCmd.CURRENT_MOVE_STATE == ALCmd.MOVE_STATE_BACK){
       ALCmd.CURRENT_CHUNK = ALCmd.CURRENT_CHUNK-1;
       if(ALCmd.CURRENT_CHUNK == -1)
@@ -324,12 +327,14 @@ import java.util.Locale;
     }
     String changeStr = "index" + ALCmd.CURRENT_CHUNK + ".ts";
     chunkUri = UriUtil.resolveToUri(mediaPlaylist.baseUri, changeStr);
-    //下面这些可能有问题
+    //下面这些可能有问题，FOV自适应上下模块，改变加载的网址无缝切换
     if(ALCmd.CURRENT_MOVE_STATE == ALCmd.MOVE_STATE_LOOK_DOWN)
     {
+      Log.d("Change","ChangeChangeChangeChangeChangeChange");
       ALCmd.CURRENT_CHUNK++;
 //      String strBase = "http://10.213.122.139:8080/hls/NFS_1G_LOW/";
-      mediaPlaylist.baseUri = "http://10.213.122.139:8080/hls/NFS_1G_LOW/index.m3u8";
+//      mediaPlaylist.baseUri = "http://10.213.122.139:8080/hls/NFS_1G_LOW/index.m3u8";
+      mediaPlaylist.baseUri = "http://10.213.122.102:8080/hls/vr_20UD/index.m3u8";
       chunkUri = UriUtil.resolveToUri(mediaPlaylist.baseUri , changeStr);
 //      chunkUri = Uri.parse(strBase+changeStr);
     }
